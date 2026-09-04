@@ -1,4 +1,4 @@
-# Virtual environment
+# Python virtual environment
 .venv/
 venv/
 env/
@@ -7,17 +7,21 @@ env/
 __pycache__/
 *.py[cod]
 
-# VS Code
-.vscode/
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Jupyter
-.ipynb_checkpoints/
+# React build
+frontend/dist/
 
 # Environment variables
 .env
 .env.*
 
-# Python build files
-build/
-dist/
-*.egg-info/
+# VS Code
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints/

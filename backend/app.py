@@ -2,17 +2,17 @@ import pickle
 from pathlib import Path
 
 import pandas as pd
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, request
+from flask_cors import CORS
+import os
 
 ROOT = Path(__file__).resolve().parent
 MODEL_PATH = ROOT / "RidgeModel.pkl"
 DATA_PATH = ROOT / "Cleaned_data.csv"
 
-app = Flask(
-    __name__,
-    static_folder="static",
-    template_folder="templates",
-)
+
+app = Flask(__name__)
+CORS(app)
 
 _pipe = None
 _locations = None
@@ -40,14 +40,29 @@ def get_locations():
     return _locations
 
 
+
 @app.route("/")
-def index():
-    return render_template("index.html")
+def home():
+
+    return jsonify({
+        "message": "House Price Prediction API is running",
+        "status": "success"
+    })
 
 
-@app.route("/api/locations")
+@app.route("/api/locations", methods=["GET"])
 def api_locations():
-    return jsonify({"locations": get_locations()})
+
+    try:
+        return jsonify({
+            "locations": get_locations()
+        })
+    except FileNotFoundError as error:
+        return jsonify({
+            "error": str(error)
+        }), 500
+    
+
 
 
 @app.route("/api/predict", methods=["POST"])
@@ -88,3 +103,5 @@ def api_predict():
 
 if __name__ == "__main__":
     app.run(debug=True, host="127.0.0.1", port=5000)
+    # port = int(os.environ.get("PORT", 5000))
+    # app.run(host="0.0.0.0", port=port)
