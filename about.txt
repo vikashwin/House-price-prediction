@@ -1,0 +1,4 @@
+Ridge test R²: 0.8285
+MAE  : 20.86
+RMSE : 46.11
+Saved C:\Users\vikas\Desktop\python_projects\House-price-prediction\RidgeModel.pkl
